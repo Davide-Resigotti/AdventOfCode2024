@@ -2,7 +2,7 @@ import re
 
 def multiply(row):
 
-    mul_pattern = r"mul\((\d+),(\d+)\)"
+    mul_pattern = r"mul\((\d{1,3}),(\d{1,3})\)"
     control_pattern = r"(do\(\)|don't\(\))"
     full_pattern = rf"{mul_pattern}|{control_pattern}"
 
@@ -20,9 +20,6 @@ def multiply(row):
             total_sum += int(mul_a) * int(mul_b)
 
     return total_sum
-
-
-
 
 with open("day3/test2.txt") as file:
     result = 0
