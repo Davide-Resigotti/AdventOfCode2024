@@ -1,5 +1,6 @@
 safe = 0
 
+
 def is_safe(report):
     """Check if a report is safe by the original rules."""
     is_ascending = True
@@ -7,7 +8,7 @@ def is_safe(report):
     valid_distance = True
 
     for i in range(1, len(report)):
-        diff = report[i] - report[i-1]
+        diff = report[i] - report[i - 1]
 
         # Check for ascending or descending order
         if diff > 0:
@@ -37,7 +38,7 @@ with open("day2/input.txt") as file:
             # If not safe, apply the Problem Dampener
             for i in range(len(row)):
                 # Create a new list with the current level removed
-                modified_row = row[:i] + row[i+1:]
+                modified_row = row[:i] + row[i + 1 :]
                 if is_safe(modified_row):
                     print(f"Safe after removing level {row[i]}: {modified_row}")
                     safe += 1
