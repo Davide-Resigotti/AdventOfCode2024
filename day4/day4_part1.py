@@ -1,29 +1,34 @@
 import numpy as np
 
-with open('day4/test.txt', 'r') as f:
+with open('day4/input.txt', 'r') as f:
     lines = f.read().split('\n')
 
-# store word search as an array of ASCII codes
 rows = len(lines)
 cols = len(lines[0])
-search_grid = np.ndarray((rows, cols), dtype=int)
-for i, L in enumerate(lines):
-    for j, c in enumerate(L):
-        search_grid[i,j] = ord(c)
+word = 'XMAS'
+word_len = len(word)
+count = 0
 
-total = 0
-for i in range(rows):
-    for j in range(cols):
-        if search_grid[i,j] == ord('X'):
-            directions = [(a,b) for a in [-1, 0, 1] for b in [-1, 0, 1]]
-            for d in directions:
-                xmas_flag = True
-                for k, c in enumerate(['M', 'A', 'S'], start=1):
-                    if i + k * d[0] < 0 or i + k * d[0] >= rows \
-                        or j + k * d[1] < 0 or j + k * d[1] >= cols \
-                            or search_grid[i + k * d[0], j + k * d[1]] != ord(c):
-                        xmas_flag = False
-                        break
-                if xmas_flag:
-                    total += 1
-print(total)
+# directions are: up, down, left, righ, down-right, down-left, up-right, up-left
+# represented by (<row-direction>,<column-direction>)
+directions = [(-1,0),(1,0),(0,-1),(0,1),(1,1),(1,-1),(-1,1),(-1,-1)]
+
+def is_valid(r, c):
+    return 0 <= r < rows and 0 <= c < cols
+
+for r in range(rows):
+    for c in range(cols):
+        for dr, dc in directions:
+            match = True
+            for i in range(word_len):
+                nr, nc = r + dr * i, c + dc * i # position of the i letter
+                if not is_valid(nr, nc) or lines[nr][nc] != word[i]:
+                    match = False
+                    break
+            if match:
+                count += 1          
+                
+print(count)
+
+    
+
